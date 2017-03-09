@@ -65,7 +65,7 @@ I trained a linear SVM using a combination of HOG features and color (histogram)
     3. The window will be drawn in a heatmap
     4. We will filter the boxes of the heatmap which occur less than the given threshold. The result can be seen as following:
 
-    ![Sliding Window difference][report/5_heat_map.png]
+    ![Sliding Window difference](report/5_heat_map.png)
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
