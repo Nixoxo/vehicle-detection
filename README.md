@@ -24,31 +24,27 @@ You can see here the [project video](https://youtu.be/9jJKFtFYVJI)
 
 # 1. Histogram of Oriented Gradients (HOG)
 
-1. In the first step I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
+####1. In the first step I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
 ![Vehicle and Non-Vehicle](report/1_vehicle_no_vehicle.png)
 
 
-2. In the second step I extracted the HOG features by using the method [`skimage.feature.hog()`](http://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.hog). You can find my implementation in the [notebook](P5-vehicle-detection.ipynb) by searching for the following method `get_hog_features(img, orient, pix_per_cell, cell_per_block,vis=False, feature_vec=True)`
+####2. In the second step I extracted the HOG features by using the method [`skimage.feature.hog()`](http://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.hog). You can find my implementation in the [notebook](P5-vehicle-detection.ipynb) by searching for the following method `get_hog_features(img, orient, pix_per_cell, cell_per_block,vis=False, feature_vec=True)`
 
 
+I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like. Here are some examples of using different 
 
-![alt text][image1]
-
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
-
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
+![Vehicle and Non-Vehicle](report/2_different_hog.png)
 
 
-![alt text][image2]
+I tried various combinations of parameters and color spaces. I had the best results with the following parameters `color_space=HSV`,
+`orient=5`, `pix_per_cell=8`, `cell_per_block=2` and `hog_channel=ALL`
 
-####2. Explain how you settled on your final choice of HOG parameters.
+####3. Support Vector Machine (SVM) Classifier
+I trained a linear SVM using a combination of HOG features and color (histogram) features. I normalised the data with the [`sklearn.preprocessing.StandardScaler`](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html). Before training the classifier I split the data into 80% training and 20% testing. The image shows a short sum up of the training and testing.
 
-I tried various combinations of parameters and...
+![Vehicle and Non-Vehicle](report/3_svm_sum.png)
 
-####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
-
-I trained a linear SVM using...
 
 ###Sliding Window Search
 
