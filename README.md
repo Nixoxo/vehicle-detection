@@ -1,7 +1,12 @@
 # Vehicle Detection
-[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
 
+## Overview
+* Folder report/: contains images for the report
+* README.md: Project Description
+* P5-vehicle-detection.ipynb: contains the code for the project
+
+## Project
 The goal of the project is to write a software pipeline which can draw bounding boxes around vehicles in a video. 
 
 
@@ -18,11 +23,13 @@ The steps of this project are the following:
 
 Here are links to the labeled data for [vehicle](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip) and [non-vehicle](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip) examples to train your classifier.  These example images come from a combination of the [GTI vehicle image database](http://www.gti.ssr.upm.es/data/Vehicle_database.html), the [KITTI vision benchmark suite](http://www.cvlibs.net/datasets/kitti/), and examples extracted from the project video itself.   You are welcome and encouraged to take advantage of the recently released [Udacity labeled dataset](https://github.com/udacity/self-driving-car/tree/master/annotations) to augment your training data.  
 
-You can see here the [project video](https://youtu.be/9jJKFtFYVJI)
+
 ---
 
 
 # 1. Histogram of Oriented Gradients (HOG)
+
+The code of this chapter can be found in notebook at the section *1. Feature Extraction* and *2. Vehicle Classification*.
 
 ####1. In the first step I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
@@ -48,6 +55,8 @@ I trained a linear SVM using a combination of HOG features and color (histogram)
 
 ###Sliding Window Search
 
+The whole code of this chapter can be found in notebook at the section *Sliding Window Search*.
+
 ####1. Implementation of sliding window
 
 1. I decided to implement the method  `slide_window`
@@ -59,7 +68,7 @@ I trained a linear SVM using a combination of HOG features and color (histogram)
     1. It extracts the features of the images.
     2. The trained SVM classifies the window based on the image. If the window is classified as an car, the window will be added to the box.
     
-3. The second step does not classify very successful. So I use different scales of the image and classify the windows for each scale. This will result in more boxes, because the disadvantage of the method described in the second method only works if the car is in the perfect window.
+3. The second step does not classify very successful. So I use different scales of the image and classify the windows for each scale. This will result in more boxes, because the disadvantage of the method described in the second method only works if the car is in the perfect window. I implemented this in the method `find_cars`.
     1. The second step is executed multiple times for different image scales. 
     2. We will probably receive more correctly classified windows
     3. The window will be drawn in a heatmap
@@ -69,12 +78,14 @@ I trained a linear SVM using a combination of HOG features and color (histogram)
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using HSV 3-channel HOG features plus histograms of color in the feature vector, which provided a nice result.  Here is a example image:
+Ultimately I searched on two scales using HSV 3-channel HOG features plus histograms of color in the feature vector, which provided a nice result. 
 
-![Example of boxes](report/5_example.png)
 ---
 
 ### Video Implementation
+
+The whole code of this chapter can be found in notebook at the section *Video - Implementation*.
+
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
 Here's a  [project video](https://youtu.be/9jJKFtFYVJI)
@@ -82,13 +93,26 @@ Here's a  [project video](https://youtu.be/9jJKFtFYVJI)
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+The code for this part can be seen in the notebook at the section *Heatmap* (method=`heatmap`). 
+
+In a nutshell, based on the box list a heat map will be created. I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
+
+Prerequisite: a box list which was detected by the implementation of sliding window search
+
+1. In the first step, the algorithm iterates through the boxes of the box list and adds +1 to the region of the box
+2. The algorithm filters out the regions which are below the threshold heat and sets them to zero.
+3. The boxes are created through the left over heat regions and drawn to the image.
+
+
 
 Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
 
+![Example of boxes](report/5_example.png)
+
+
 ### Some Examples
 
-![Examples with heat map][6_examples.png]
+![Examples with heat map][report/6_examples.png]
 
 
 ---
