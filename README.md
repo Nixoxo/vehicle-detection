@@ -48,11 +48,24 @@ I trained a linear SVM using a combination of HOG features and color (histogram)
 
 ###Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+####1. Implementation of sliding window
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
+1. I decided to implement the method  `slide_window`
+    * The function will slide through an image with an given window size and extract information. 
+    * I decided to set a start and end point for x and y, because for the video we know on which side new cars are coming. The image shows the difference.
+    ![Sliding Window Difference](report/4_sliding_window.png)
 
-![alt text][image3]
+2. The next step is to classify the *windows*. I implemented this in the method `search_windows`
+    1. It extracts the features of the images.
+    2. The trained SVM classifies the window based on the image. If the window is classified as an car, the window will be added to the box.
+    
+3. The second step does not classify very successful. So I use different scales of the image and classify the windows for each scale. This will result in more boxes, because the disadvantage of the method described in the second method only works if the car is in the perfect window.
+    1. The second step is executed multiple times for different image scales. 
+    2. We will probably receive more correctly classified windows
+    3. The window will be drawn in a heatmap
+    4. We will filter the boxes of the heatmap which occur less than the given threshold. The result can be seen as following:
+
+    ![Sliding Window difference][report/5_heat_map.png]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
