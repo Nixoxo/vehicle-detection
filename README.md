@@ -112,7 +112,7 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ### Some Examples
 
-![Examples with heat map][report/6_examples.png]
+![Examples with heat map](report/6_examples.png)
 
 
 ---
