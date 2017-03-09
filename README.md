@@ -29,10 +29,7 @@ You can see here the [project video](https://youtu.be/9jJKFtFYVJI)
 ![Vehicle and Non-Vehicle](report/1_vehicle_no_vehicle.png)
 
 
-2. In the second step I extracted the HOG features by using the method [`skimage.feature.hog()`](http://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.hog). You can find my [implementation](P5-vehicle-detection.ipynb#HOG-Features) in the notebook
-####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
-
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+2. In the second step I extracted the HOG features by using the method [`skimage.feature.hog()`](http://scikit-image.org/docs/dev/api/skimage.feature.html#skimage.feature.hog). You can find my implementation in the [notebook](P5-vehicle-detection.ipynb) by searching for the following method `get_hog_features(img, orient, pix_per_cell, cell_per_block,vis=False, feature_vec=True)`
 
 
 
