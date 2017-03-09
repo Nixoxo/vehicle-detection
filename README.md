@@ -123,4 +123,11 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
 
+I used a simple trick for doing a better job at classifing the vehicle by setting a start/end point for x and y. This will cause a lot of trouble if the car drive on the right lane for example. The current pipeline will not work if the vehicle are not on the right side of the car. 
+
+The pipeline will also fail if there is a truck, because there are no images provided for the trucks.
+
+A simple improvement would be to change the threshold of the heat map, because at the moment the detected vehicle areas are very huge.
+
+An other improvement would be to change the svm to a neural network and train it on the database.
 
